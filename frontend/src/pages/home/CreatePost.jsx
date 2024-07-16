@@ -1,3 +1,8 @@
+
+import { CiImageOn } from "react-icons/ci";
+import { BsEmojiSmileFill } from "react-icons/bs";
+import { useRef, useState } from "react";
+import { IoCloseSharp } from "react-icons/io5";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { FaPaperPlane } from "react-icons/fa";
@@ -33,6 +38,7 @@ const CreatePost = () => {
         throw new Error(error);
       }
     },
+
     onSuccess: () => {
       setText("");
       setImg(null);
@@ -40,10 +46,12 @@ const CreatePost = () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
+
   const handleSubmit = (e) => {
     e.preventDefault();
     createPost({ text, img });
   };
+
   const handleImgChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -54,9 +62,11 @@ const CreatePost = () => {
       reader.readAsDataURL(file);
     }
   };
+
   const insertEmoji = (emoji) => {
     setText(text + emoji);
   };
+
   return (
     <div className="flex p-4 items-start gap-4 border-b border-gray-700">
       <div className="avatar">
@@ -86,6 +96,7 @@ const CreatePost = () => {
             />
           </div>
         )}
+
         <div className="flex justify-between border-t py-2 border-t-gray-700">
           <div className="flex gap-1 items-center">
             <CiImageOn

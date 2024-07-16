@@ -1,16 +1,11 @@
-import { CiImageOn } from "react-icons/ci";
-import { BsEmojiSmileFill } from "react-icons/bs";
-import { useRef, useState } from "react";
-import { IoCloseSharp } from "react-icons/io5";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { FaPaperPlane } from "react-icons/fa";
-import Picker from 'emoji-picker-react';
 const CreatePost = () => {
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
   const imgRef = useRef(null);
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
   const { data: authUser } = useQuery({ queryKey: ["authUser"] });
   const queryClient = useQueryClient();
 
@@ -38,7 +33,6 @@ const CreatePost = () => {
         throw new Error(error);
       }
     },
-
     onSuccess: () => {
       setText("");
       setImg(null);
@@ -46,12 +40,10 @@ const CreatePost = () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
-
   const handleSubmit = (e) => {
     e.preventDefault();
     createPost({ text, img });
   };
-
   const handleImgChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -62,11 +54,9 @@ const CreatePost = () => {
       reader.readAsDataURL(file);
     }
   };
-
   const insertEmoji = (emoji) => {
     setText(text + emoji);
   };
-
   return (
     <div className="flex p-4 items-start gap-4 border-b border-gray-700">
       <div className="avatar">
@@ -96,20 +86,16 @@ const CreatePost = () => {
             />
           </div>
         )}
-
         <div className="flex justify-between border-t py-2 border-t-gray-700">
           <div className="flex gap-1 items-center">
             <CiImageOn
               className="fill-blue-400 hover:fill-blue-100 w-6 h-6 cursor-pointer"
               onClick={() => imgRef.current.click()}
             />
-             <BsEmojiSmileFill
+            <BsEmojiSmileFill
               className="fill-yellow-300 hover:fill-yellow-100 w-5 h-5 cursor-pointer"
-              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+              onClick={() => insertEmoji("😊")}
             />
-            {showEmojiPicker && (
-              <Picker onEmojiClick={(emojiObject) => insertEmoji(emojiObject.emoji)} />
-            )}
           </div>
           <input
             type="file"

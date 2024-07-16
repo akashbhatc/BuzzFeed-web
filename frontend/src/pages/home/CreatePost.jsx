@@ -5,11 +5,12 @@ import { IoCloseSharp } from "react-icons/io5";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { FaPaperPlane } from "react-icons/fa";
+import Picker from 'emoji-picker-react';
 const CreatePost = () => {
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
   const imgRef = useRef(null);
-
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const { data: authUser } = useQuery({ queryKey: ["authUser"] });
   const queryClient = useQueryClient();
 
@@ -102,10 +103,13 @@ const CreatePost = () => {
               className="fill-blue-400 hover:fill-blue-100 w-6 h-6 cursor-pointer"
               onClick={() => imgRef.current.click()}
             />
-            <BsEmojiSmileFill
+             <BsEmojiSmileFill
               className="fill-yellow-300 hover:fill-yellow-100 w-5 h-5 cursor-pointer"
-              onClick={() => insertEmoji("😊")}
+              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
             />
+            {showEmojiPicker && (
+              <Picker onEmojiClick={(emojiObject) => insertEmoji(emojiObject.emoji)} />
+            )}
           </div>
           <input
             type="file"

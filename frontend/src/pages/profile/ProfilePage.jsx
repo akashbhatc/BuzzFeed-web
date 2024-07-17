@@ -87,11 +87,9 @@ const ProfilePage = () => {
                 <Link to="/">
                   <FaArrowLeft className="w-4 h-4" />
                 </Link>
-                <div className="flex flex-col">
-                  <p className="font-bold text-lg">{user?.fullName}</p>
-                  <span className="text-sm text-slate-500">
-                    {POSTS?.length} posts
-                  </span>
+                 <div className="flex flex-col">
+                  <p className="font-bold text-lg pt-2">{user?.fullName}</p>
+                  <p className="text-sm pb-4 ">@{user?.username}</p>
                 </div>
               </div>
               <div className="relative group/cover">
